@@ -13,6 +13,7 @@ import bodyParser from 'body-parser'
 import path from 'path'
 import helmet from 'helmet'
 import morgan from 'morgan'
+import Web3 from 'web3'
 
 // Internal dependencies
 import config from './config'
@@ -42,6 +43,12 @@ async function main () {
   // Setup schemas
   const schema = Schema()
 
+  // Setup web3
+  const web3 = new Web3(new web3.providers.HttpProvider(config.get('web3Provider')))
+  if (web3.isConnected()) {
+    console.log(`connected to web3 successfully`)
+  }
+
   schema.add('getBlockRequest', getBlockRequestSchema)
   schema.add('getBlockResponse', getBlockResponseSchema)
   schema.add('getTransactionRequest', getTransactionRequestSchema)
@@ -49,7 +56,7 @@ async function main () {
   schema.add('getTransactionReceiptRequest', getTransactionReceiptRequestSchema)
   schema.add('getTransactionReceiptResponse', getTransactionReceiptResponseSchema)
 
-  const services = [ EthService ].map(service => service({ db, schema }))
+  const services = [ EthService ].map(service => service({ db, schema, web3 }))
 
   // Initialize service by looping through them
   services.forEach((service) => {

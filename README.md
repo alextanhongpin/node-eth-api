@@ -119,24 +119,24 @@ $ yarn build
 ```sql
 CREATE TABLE block (
   difficulty BIGINT,
-  extraData TEXT,
+  extraData VARCHAR(255),
   gasLimit INT,
   gasUsed INT,
-  hash TEXT,
-  logsBloom TEXT,
-  miner TEXT,
-  mixHash TEXT,
-  nonce TEXT,
+  hash VARCHAR(255),
+  logsBloom VARCHAR(255),
+  miner VARCHAR(255),
+  mixHash VARCHAR(255),
+  nonce VARCHAR(255),
   number INT NOT NULL,
-  parentHash TEXT,
-  receiptsRoot TEXT,
-  sha3Uncles TEXT,
+  parentHash VARCHAR(255),
+  receiptsRoot VARCHAR(255),
+  sha3Uncles VARCHAR(255),
   size INT,
-  stateRoot TEXT,
+  stateRoot VARCHAR(255),
   timestamp INT NOT NULL,
   totalDifficulty BIGINT,
   transactions JSON,
-  transactionsRoot TEXT,
+  transactionsRoot VARCHAR(255),
   uncles JSON,
   PRIMARY KEY (number)
 )
@@ -146,18 +146,19 @@ CREATE TABLE block (
 
 ```sql
 CREATE TABLE transaction (
-  description TEXT,
+  hash VARCHAR(255),
+  description VARCHAR(255),
   nonce INT,
-  blockHash TEXT,
+  blockHash VARCHAR(255),
   blockNumber INT,
   transactionIndex INT
-  from TEXT
-  to TEXT
+  from VARCHAR(255)
+  to VARCHAR(255)
   value BIGINT
   gasPrice BIGINT
   gas INT
-  input TEXT
-  PRIMARY KEY(blockHash)
+  input VARCHAR(255)
+  PRIMARY KEY(hash)
 )
 ```
 
@@ -165,17 +166,17 @@ CREATE TABLE transaction (
 
 ```sql
 CREATE TABLE transactionReceipt (
-  blockHash TEXT,
+  blockHash VARCHAR(255),
   blockNumber INT,
-  transactionHash TEXT,
+  transactionHash VARCHAR(255),
   transactionIndex INT,
-  from TEXT,
-  to TEXT,
+  from VARCHAR(255),
+  to VARCHAR(255),
   cumulativeGasUsed INT,
   gasUsed INT,
-  contractAddress TEXT,
+  contractAddress VARCHAR(255),
   logs JSON,
-  status TEXT,
+  status VARCHAR(255),
   PRIMARY KEY (transactionHash)
 )
 ```

@@ -8,7 +8,7 @@
  * Copyright (c) 2017 alextanhongpin. All rights reserved.
 **/
 
-export default function Store (db) {
+export default function Store ({ db, web3 }) {
 
   // NOTE: In large scale projects, it might be more sensible to separate the read/write at the 
   // code level, as well as the database user
@@ -37,7 +37,7 @@ export default function Store (db) {
   }
 
   async function getTransactionFromStorage ({ hash }) {
-    const [rows] = await db.query('SELECT * FROM transaction WHERE transactionHash = ?', [hash])
+    const [rows] = await db.query('SELECT * FROM transaction WHERE hash = ?', [hash])
     return (rows && rows[0]) || null
   }
 
@@ -85,40 +85,28 @@ export default function Store (db) {
   }
 
   async function getTransaction ({ hash }) {
-    // Query db/cache to check if block exists
     const transaction = await getTransactionFromStorage({ hash })
-
-    // Block is not available in current storage, query from main net
     if (!transaction) {
       const transaction = await getTransactionFromWeb3({ hash })
-
-      // Block still does not exist, throw error
       if (!transaction) {
         throw new Error(`transaction ${hash} does not exist`)
       }
 
-      // Store new block in the database
-      const newTransactionWithId = await postBlock(transaction)
+      const newTransactionWithId = await postTransaction(transaction)
       return newTransactionWithId
     }
     return transaction
   }
 
   async function getTransactionReceipt ({ hash }) {
-    // Query db/cache to check if block exists
     const transactionReceipt = await getTransactionReceiptFromStorage({ hash })
-
-    // Block is not available in current storage, query from main net
     if (!transactionReceipt) {
       const transactionReceipt = await getTransactionReceiptFromWeb3({ hash })
-
-      // Block still does not exist, throw error
       if (!transactionReceipt) {
         throw new Error(`transaction ${hash} does not exist`)
       }
 
-      // Store new block in the database
-      const newTransactionReceiptWithId = await postBlock(transactionReceipt)
+      const newTransactionReceiptWithId = await postTransactionReceipt(transactionReceipt)
       return newTransactionReceiptWithId
     }
     return transactionReceipt

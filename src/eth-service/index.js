@@ -15,8 +15,8 @@ import Route from './route'
 import express from 'express'
 const router = express.Router()
 
-function Service ({ db, schema }) {
-  const store = Store(db)
+function Service ({ db, schema, web3 }) {
+  const store = Store({ db, web3 })
   const model = Model({ store, schema })
   const route = Route(model)
 

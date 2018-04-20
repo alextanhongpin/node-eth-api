@@ -19,8 +19,17 @@ const PORT = {
   env: 'PORT'
 }
 
+const WEB3_PROVIDER = {
+  doc: 'The http provider for web3',
+  format: 'url',
+  default: 'http://localhost:8545',
+  env: 'WEB3_PROVIDER'
+}
+
+
 const config = convict({
   port: PORT,
+  web3Provider: WEB3_PROVIDER,
   db: DB
 })
 
