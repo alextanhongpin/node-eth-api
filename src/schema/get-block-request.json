@@ -1,0 +1,15 @@
+{
+	"id": "getBlockRequest",
+	"$schema": "http://json-schema.org/draft-06/schema#",
+	"title": "getBlockRequest",
+	"description": "Returns a block matching the block number or block hash",
+	"type": "object",
+	"properties": {
+		"number": {
+			"type": ["integer", "string"],
+			"description": "Block number or block hash",
+			"minimum": 0
+		}
+	},
+	"required": ["number"]
+}

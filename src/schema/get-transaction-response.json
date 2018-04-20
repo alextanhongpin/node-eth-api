@@ -1,0 +1,61 @@
+{
+	"id": "getTransactionResponse",
+	"$schema": "http://json-schema.org/draft-06/schema#",
+	"title": "getTransactionResponse",
+	"description": "Returns a transaction matching the given transaction hash",
+	"definitions": {
+		"transaction": {
+			"type": "object",
+			"properties": {
+				"hash": {
+				 "description": "String, 32 Bytes - hash of the transaction",
+				 "type": "string"
+				},
+				"nonce": {
+				 "description": "Number - the number of transactions made by the sender prior to this one",
+				 "type": "integer"
+				},
+				"blockHash": {
+				 "description": "String, 32 Bytes - hash of the block where this transaction was in. null when its pending",
+				 "type": "string"
+				},
+				"blockNumber": {
+				 "description": "Number - block number where this transaction was in. null when its pending",
+				 "type": "number"
+				},
+				"transactionIndex": {
+				 "description": "Number - integer of the transactions index position in the block. null when its pending",
+				 "type": "integer"
+				},
+				"from": {
+				 "description": "String, 20 Bytes - address of the sender",
+				 "type": "string"
+				},
+				"to": {
+				 "description": "String, 20 Bytes - address of the receiver. null when its a contract creation transaction",
+				 "type": "string"
+				},
+				"value": {
+				 "description": "BigNumber - value transferred in Wei",
+				 "type": "integer"
+				},
+				"gasPrice": {
+				 "description": "BigNumber - gas price provided by the sender in Wei",
+				 "type": "number"
+				},
+				"gas": {
+				 "description": "Number - gas provided by the sender",
+				 "type": "number"
+				},
+				"input": {
+				 "description": "String - the data sent along with the transaction",
+				 "type": "string"
+				}
+			}
+		}
+	},
+	"oneOf": [
+		{"type": "null"},
+		{"$ref": "#/definitions/transaction"}
+	]
+}

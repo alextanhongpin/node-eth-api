@@ -1,0 +1,14 @@
+{
+	"id": "getTransactionReceiptRequest",
+	"$schema": "http://json-schema.org/draft-06/schema#",
+	"title": "getTransactionReceiptRequest",
+	"description": "Returns the receipt of a transaction by transaction hash",
+	"type": "object",
+	"properties": {
+		"hash": {
+			"type": "string",
+			"description": "The transaction hash"
+		}
+	},
+	"required": ["hash"]
+}

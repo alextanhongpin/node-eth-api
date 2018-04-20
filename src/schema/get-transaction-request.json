@@ -1,0 +1,14 @@
+{
+	"id": "getTransactionRequest",
+	"$schema": "http://json-schema.org/draft-06/schema#",
+	"title": "getTransactionRequest",
+	"description": "Returns a transaction matching the given transaction hash",
+	"type": "object",
+	"properties": {
+		"hash": {
+			"type": "string",
+			"description": "The transaction hash"
+		}
+	},
+	"required": ["hash"]
+}

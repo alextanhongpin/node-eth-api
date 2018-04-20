@@ -1,0 +1,111 @@
+{
+  "id":"getBlockResponse",
+  "$schema":"http://json-schema.org/draft-06/schema#",
+  "title":"getBlockResponse",
+  "description":"Returns a block matching the block number or block hash",
+  "definitions":{
+     "block":{
+        "type":"object",
+        "properties":{
+           "number":{
+              "description":"Number - the block number. null when its pending block",
+              "type":[
+                 "integer",
+                 "null"
+              ]
+           },
+           "hash":{
+              "description":"String, 32 Bytes - hash of the block. null when its pending block",
+              "type":[
+                 "string",
+                 "null"
+              ]
+           },
+           "parentHash":{
+              "description":"String, 32 Bytes - hash of the parent block",
+              "type":"string"
+           },
+           "nonce":{
+              "description":"String, 8 Bytes - hash of the generated proof-of-work. null when its pending block",
+              "type":[
+                 "string",
+                 "null"
+              ]
+           },
+           "sha3Uncles":{
+              "description":"String, 32 Bytes - SHA3 of the uncles data in the block",
+              "type":"string"
+           },
+           "logsBloom":{
+              "description":"String, 256 Bytes - the bloom filter for the logs of the block. null when its pending block",
+              "type":[
+                 "string",
+                 "null"
+              ]
+           },
+           "transactionsRoot":{
+              "description":"String, 32 Bytes - the root of the transaction trie of the block",
+              "type":"string"
+           },
+           "stateRoot":{
+              "description":"String, 32 Bytes - the root of the final state trie of the block",
+              "type":"string"
+           },
+           "miner":{
+              "description":"String, 20 Bytes - the address of the beneficiary to whom the mining rewards were given",
+              "type":"string"
+           },
+           "difficulty":{
+              "description":"BigNumber - integer of the difficulty for this block",
+              "type":"integer"
+           },
+           "totalDifficulty":{
+              "description":"BigNumber - integer of the total difficulty of the chain until this block",
+              "type":"integer"
+           },
+           "extraData":{
+              "description":"String - the \"extra data\" field of this block",
+              "type":"string"
+           },
+           "size":{
+              "description":"Number - integer the size of this block in bytes",
+              "type":"integer"
+           },
+           "gasLimit":{
+              "description":"Number - the maximum gas allowed in this block",
+              "type":"integer"
+           },
+           "gasUsed":{
+              "description":"Number - the total used gas by all transactions in this block",
+              "type":"integer"
+           },
+           "timestamp":{
+              "description":"Number - the unix timestamp for when the block was collated",
+              "type":"integer"
+           },
+           "transactions":{
+              "description":"Array - Array of transaction objects, or 32 Bytes transaction hashes depending on the last given parameter",
+              "type":"array",
+              "items":{
+                 "type":"string"
+              }
+           },
+           "uncles":{
+              "description":"Array - Array of uncle hashes",
+              "type":"array",
+              "items":{
+                 "type":"string"
+              }
+           }
+        }
+     }
+  },
+  "oneOf":[
+     {
+        "type":"null"
+     },
+     {
+        "$ref":"#/definitions/block"
+     }
+  ]
+}
