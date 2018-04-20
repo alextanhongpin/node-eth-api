@@ -26,10 +26,17 @@ const WEB3_PROVIDER = {
   env: 'WEB3_PROVIDER'
 }
 
+const ERC20_CONTRACT = {
+  doc: 'The ERC20 contract',
+  format: String,
+  default: process.env.ERC20_CONTRACT,
+  env: 'ERC20_CONTRACT'
+}
 
 const config = convict({
   port: PORT,
   web3Provider: WEB3_PROVIDER,
+  erc20Contract: ERC20_CONTRACT,
   db: DB
 })
 

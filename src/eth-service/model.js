@@ -11,8 +11,17 @@
 export default function Model ({ store, schema }) {
   async function getBlock (req) {
     const validReq = await schema.validate('getBlockRequest', req)
-    const res = await store.getBlock(validReq)
-    return schema.validate('getBlockResponse', res)
+    const block = await store.getBlockFromStorage(validReq)
+    if (!block) {
+      const block = await store.getBlockFromWeb3(validReq)
+      if (!block) {
+        throw new Error(`block ${validReq.number} does not exist`)
+      }
+      // Only store the blocks we want to
+      const validBlock = await schema.validate('getBlockResponse', block)
+      return store.postBlock(validBlock)
+    }
+    return schema.validate('getBlockResponse', block)
   }
 
   async function getTransaction (req) {
