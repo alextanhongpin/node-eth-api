@@ -112,13 +112,70 @@ $ yarn cover
 $ yarn build
 ```
 
-## Create a Table
+## Create Table
+
+### Block
 
 ```sql
-CREATE TABLE food (
-    id int NOT NULL,
-    name varchar(255) NOT NULL,
-    PRIMARY KEY (ID)
-);
+CREATE TABLE block (
+  difficulty BIGINT,
+  extraData TEXT,
+  gasLimit INT,
+  gasUsed INT,
+  hash TEXT,
+  logsBloom TEXT,
+  miner TEXT,
+  mixHash TEXT,
+  nonce TEXT,
+  number INT NOT NULL,
+  parentHash TEXT,
+  receiptsRoot TEXT,
+  sha3Uncles TEXT,
+  size INT,
+  stateRoot TEXT,
+  timestamp INT NOT NULL,
+  totalDifficulty BIGINT,
+  transactions JSON,
+  transactionsRoot TEXT,
+  uncles JSON,
+  PRIMARY KEY (number)
+)
 ```
 
+### Transaction
+
+```sql
+CREATE TABLE transaction (
+  description TEXT,
+  nonce INT,
+  blockHash TEXT,
+  blockNumber INT,
+  transactionIndex INT
+  from TEXT
+  to TEXT
+  value BIGINT
+  gasPrice BIGINT
+  gas INT
+  input TEXT
+  PRIMARY KEY(blockHash)
+)
+```
+
+### TransactionReceipt
+
+```sql
+CREATE TABLE transactionReceipt (
+  blockHash TEXT,
+  blockNumber INT,
+  transactionHash TEXT,
+  transactionIndex INT,
+  from TEXT,
+  to TEXT,
+  cumulativeGasUsed INT,
+  gasUsed INT,
+  contractAddress TEXT,
+  logs JSON,
+  status TEXT,
+  PRIMARY KEY (transactionHash)
+)
+```

@@ -15,20 +15,24 @@ export default function Store (db) {
 
   // Reads
 
+  // Source: Web3
+
   async function getBlockFromWeb3 ({ number }) {
     return web3.eth.getBlock(number)
   }
  
-  async function getTransaction ({ hash }) {
+  async function getTransactionFromWeb3 ({ hash }) {
     return web3.eth.getTransaction(hash)
   }
  
-  async function getTransactionReceipt ({ hash }) {
+  async function getTransactionReceiptFromWeb3 ({ hash }) {
     return web3.eth.getTransactionReceipt(hash)
   }
 
+  // Source: Database
+
   async function getBlockFromStorage ({ number }) {
-    const [rows] = await db.query('SELECT * FROM block WHERE blockNumber = ?', [number])
+    const [rows] = await db.query('SELECT * FROM block WHERE number = ?', [number])
     return (rows && rows[0]) || null
   }
 
@@ -64,7 +68,6 @@ export default function Store (db) {
   async function getBlock ({ number }) {
     // Query db/cache to check if block exists
     const block = await getBlockFromStorage({ number })
-
     // Block is not available in current storage, query from main net
     if (!block) {
       const block = await getBlockFromWeb3({ number })
