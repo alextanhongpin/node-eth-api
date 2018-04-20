@@ -17,15 +17,15 @@ export default function Store (db) {
 
   // one, all, create, update, delete, count, search is reserved for DB only operation
   async function getBlock ({ number }) {
-    return {}
+    return null
   }
  
   async function getTransaction ({ hash }) {
-    return {}
+    return null
   }
  
   async function getTransactionReceipt ({ hash }) {
-    return {}
+    return null
   }
  
   return {

@@ -21,12 +21,12 @@ import Schema from './schema'
 import EthService from './eth-service'
 
 // Schemas
-import getBlockRequestSchema from '../../src/schema/get-block-request.json'
-import getBlockResponseSchema from '../../src/schema/get-block-response.json'
-import getTransactionRequestSchema from '../../src/schema/get-transaction-request.json'
-import getTransactionResponseSchema from '../../src/schema/get-transaction-response.json'
-import getTransactionReceiptRequestSchema from '../../src/schema/get-transaction-receipt-request.json'
-import getTransactionReceiptResponseSchema from '../../src/schema/get-transaction-receipt-response.json'
+import getBlockRequestSchema from './schema/get-block-request.json'
+import getBlockResponseSchema from './schema/get-block-response.json'
+import getTransactionRequestSchema from './schema/get-transaction-request.json'
+import getTransactionResponseSchema from './schema/get-transaction-response.json'
+import getTransactionReceiptRequestSchema from './schema/get-transaction-receipt-request.json'
+import getTransactionReceiptResponseSchema from './schema/get-transaction-receipt-response.json'
 
 // main is where our application resides
 async function main () {

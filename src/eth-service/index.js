@@ -30,6 +30,7 @@ function Service ({ db, schema }) {
 
 export default (options) => {
   return {
+    basePath: '/',
     route: Service(options)
   }
 }
