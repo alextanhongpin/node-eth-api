@@ -12,3 +12,12 @@ services:
     - ./data/mysql:/var/lib/mysql
     ports:
     - 3306:3306
+
+  ethereum:
+    image: ethereum/client-go
+    command: --syncmode "fast" --cache 1024 --rpc --rpcaddr="0.0.0.0" --rpcport="8545" --rpccorsdomain="http://localhost:3000"
+    ports:
+    - 127.0.0.1:30303:30303
+    - 127.0.0.1:8545:8545
+    # volumes:
+    # - ./data/ethereum:/root/.ethereum

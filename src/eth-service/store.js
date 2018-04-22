@@ -9,8 +9,7 @@
 **/
 
 export default function Store ({ db, web3 }) {
-
-  // NOTE: In large scale projects, it might be more sensible to separate the read/write at the 
+  // NOTE: In large scale projects, it might be more sensible to separate the read/write at the
   // code level, as well as the database user
 
   // Reads
@@ -20,11 +19,11 @@ export default function Store ({ db, web3 }) {
   async function getBlockFromWeb3 ({ number }) {
     return web3.eth.getBlock(number)
   }
- 
+
   async function getTransactionFromWeb3 ({ hash }) {
     return web3.eth.getTransaction(hash)
   }
- 
+
   async function getTransactionReceiptFromWeb3 ({ hash }) {
     return web3.eth.getTransactionReceipt(hash)
   }
@@ -49,7 +48,12 @@ export default function Store ({ db, web3 }) {
   // Writes
 
   async function postBlock (block) {
-    const [ rows ] = await db.query('INSERT INTO block (a, b) VALUES (?, ?)', ['1', '2'])
+    const keys = Object.keys(block).join(', ')
+    const valuePlaceholders = Array(Object.keys(block).length).fill('?').join(', ')
+    const values = Object.values(block)
+    const statement = `INSERT INTO block (${keys}) VALUES (${valuePlaceholders})`
+    console.log('statement', statement)
+    const [ rows ] = await db.query(statement, values)
     return rows
   }
 
@@ -61,69 +65,20 @@ export default function Store ({ db, web3 }) {
   async function postTransactionReceipt (block) {
     const [ rows ] = await db.query('INSERT INTO transactionReceipt (a, b) VALUES (?, ?)', ['1', '2'])
     return rows
-  } 
+  }
 
-  // Facade operation
-
-  // async function getBlock ({ number }) {
-  //   // Query db/cache to check if block exists
-  //   const block = await getBlockFromStorage({ number })
-  //   // Block is not available in current storage, query from main net
-  //   if (!block) {
-  //     const block = await getBlockFromWeb3({ number })
-
-  //     // Block still does not exist, throw error
-  //     if (!block) {
-  //       throw new Error(`block ${number} does not exist`)
-  //     }
-  //     // Compare it with the erc20 contract token to verify if this block belongs to the address
-  //     // block.hash === erc20token
-
-  //     // Store new block in the database
-  //     const newBlockWithId = await postBlock(block)
-  //     return newBlockWithId
-  //   }
-  //   return block
-  // }
-
-  // async function getTransaction ({ hash }) {
-  //   const transaction = await getTransactionFromStorage({ hash })
-  //   if (!transaction) {
-  //     const transaction = await getTransactionFromWeb3({ hash })
-  //     if (!transaction) {
-  //       throw new Error(`transaction ${hash} does not exist`)
-  //     }
-
-  //     const newTransactionWithId = await postTransaction(transaction)
-  //     return newTransactionWithId
-  //   }
-  //   return transaction
-  // }
-
-  // async function getTransactionReceipt ({ hash }) {
-  //   const transactionReceipt = await getTransactionReceiptFromStorage({ hash })
-  //   if (!transactionReceipt) {
-  //     const transactionReceipt = await getTransactionReceiptFromWeb3({ hash })
-  //     if (!transactionReceipt) {
-  //       throw new Error(`transaction ${hash} does not exist`)
-  //     }
-
-  //     const newTransactionReceiptWithId = await postTransactionReceipt(transactionReceipt)
-  //     return newTransactionReceiptWithId
-  //   }
-  //   return transactionReceipt
-  // }
- 
   // We only expose the APIs we need
   return {
-    getBlock,
-    getTransaction,
-    getTransactionReceipt,
+    // Read
     getBlockFromWeb3,
     getTransactionFromWeb3,
     getTransactionReceiptFromWeb3,
     getBlockFromStorage,
     getTransactionFromStorage,
-    getTransactionReceiptFromStorage
+    getTransactionReceiptFromStorage,
+    // Writes
+    postBlock,
+    postTransaction,
+    postTransactionReceipt
   }
 }

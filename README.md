@@ -117,7 +117,7 @@ $ yarn build
 ### Block
 
 ```sql
-CREATE TABLE block (
+CREATE TABLE IF NOT EXISTS block (
   difficulty BIGINT,
   extraData VARCHAR(255),
   gasLimit INT,
@@ -145,7 +145,7 @@ CREATE TABLE block (
 ### Transaction
 
 ```sql
-CREATE TABLE transaction (
+CREATE TABLE IF NOT EXISTS transaction (
   hash VARCHAR(255),
   description VARCHAR(255),
   nonce INT,
@@ -165,7 +165,7 @@ CREATE TABLE transaction (
 ### TransactionReceipt
 
 ```sql
-CREATE TABLE transactionReceipt (
+CREATE TABLE IF NOT EXISTS transactionReceipt (
   blockHash VARCHAR(255),
   blockNumber INT,
   transactionHash VARCHAR(255),

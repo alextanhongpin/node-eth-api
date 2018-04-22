@@ -9,12 +9,12 @@
 **/
 
 // Import mock dataset
-import b1 from '../data/block-625106.json'
-import b2 from '../data/block-689811.json'
-import t1 from '../data/transaction-0x56215fd919232eadcf3afd9a3179fa71d5bc6dc5b8411bbb9d9a9d28f7a83858.json'
-import t2 from '../data/transaction-0xe95f2bef356edf781d71ee81934742aff694ac2fcaab17e05d8ab4b7c43f8fad.json'
-import tr1 from '../data/transaction-receipt-0x56215fd919232eadcf3afd9a3179fa71d5bc6dc5b8411bbb9d9a9d28f7a83858.json'
-import tr2 from '../data/transaction-receipt-0xe95f2bef356edf781d71ee81934742aff694ac2fcaab17e05d8ab4b7c43f8fad.json'
+import b1 from '../mock-data/block-625105.json'
+import b2 from '../mock-data/block-689811.json'
+import t1 from '../mock-data/transaction-0x56215fd919232eadcf3afd9a3179fa71d5bc6dc5b8411bbb9d9a9d28f7a83858.json'
+import t2 from '../mock-data/transaction-0xe95f2bef356edf781d71ee81934742aff694ac2fcaab17e05d8ab4b7c43f8fad.json'
+import tr1 from '../mock-data/transaction-receipt-0x56215fd919232eadcf3afd9a3179fa71d5bc6dc5b8411bbb9d9a9d28f7a83858.json'
+import tr2 from '../mock-data/transaction-receipt-0xe95f2bef356edf781d71ee81934742aff694ac2fcaab17e05d8ab4b7c43f8fad.json'
 
 const MockStore = () => {
   // This is an example on how we mock our database dependencies
@@ -37,7 +37,6 @@ const MockStore = () => {
     }
     return transactions[hash] || null
   }
-
 
   async function getTransactionReceipt ({ hash }) {
     const transactions = {

@@ -12,28 +12,54 @@ export default function Model ({ store, schema }) {
   async function getBlock (req) {
     const validReq = await schema.validate('getBlockRequest', req)
     const block = await store.getBlockFromStorage(validReq)
+    console.log('getBlockFromStorage', block)
     if (!block) {
       const block = await store.getBlockFromWeb3(validReq)
+      console.log('getBlockFromWeb3', block)
       if (!block) {
         throw new Error(`block ${validReq.number} does not exist`)
       }
       // Only store the blocks we want to
-      const validBlock = await schema.validate('getBlockResponse', block)
-      return store.postBlock(validBlock)
+      try {
+        const validBlock = await schema.validate('getBlockResponse', block)
+        console.log('validBlock', validBlock)
+        const output = store.postBlock(validBlock)
+        console.log('output', output)
+        return output
+      } catch (error) {
+        console.log(error)
+        throw error
+      }
     }
     return schema.validate('getBlockResponse', block)
   }
 
   async function getTransaction (req) {
     const validReq = await schema.validate('getTransactionRequest', req)
-    const res = await store.getTransaction(validReq)
-    return schema.validate('getTransactionResponse', res)
+    const transaction = await store.getTransactionFromStorage(validReq)
+    if (!transaction) {
+      const transaction = await store.getTransactionFromWeb3(validReq)
+      if (!transaction) {
+        throw new Error(`transaction ${validReq.hash} does not exist`)
+      }
+      const validTransaction = schema.validate('getTransactionResponse', transaction)
+      return store.postTransaction(validTransaction)
+    }
+    return schema.validate('getTransactionResponse', transaction)
   }
 
   async function getTransactionReceipt (req) {
     const validReq = await schema.validate('getTransactionReceiptRequest', req)
-    const res = await store.getTransactionReceipt(validReq)
-    return schema.validate('getTransactionReceiptResponse', res)
+    const transactionReceipt = await store.getTransactionReceiptFromStorage(validReq)
+    if (!transactionReceipt) {
+      const transactionReceipt = await store.getTransactionReceiptFromWeb3(validReq)
+      if (!transactionReceipt) {
+        throw new Error(`transaction ${validReq.hash} does not exist`)
+      }
+      const validTransactionReceipt = schema.validate('getTransactionReceiptResponse', transactionReceipt)
+      return store.postTransactionReceipt(validTransactionReceipt)
+    }
+    return schema.validate('getTransactionReceiptResponse', transactionReceipt)
   }
 
   return {
