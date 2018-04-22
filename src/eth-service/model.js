@@ -17,18 +17,17 @@ export default function Model ({ store, schema }) {
       const block = await store.getBlockFromWeb3(validReq)
       console.log('getBlockFromWeb3', block)
       if (!block) {
-        throw new Error(`block ${validReq.number} does not exist`)
+        // throw new Error(`block ${validReq.number} does not exist`)
+        return null
       }
       // Only store the blocks we want to
       try {
         const validBlock = await schema.validate('getBlockResponse', block)
         console.log('validBlock', validBlock)
         const output = store.postBlock(validBlock)
-        console.log('output', output)
         return output
       } catch (error) {
-        console.log(error)
-        throw error
+        return null
       }
     }
     return schema.validate('getBlockResponse', block)
@@ -40,7 +39,8 @@ export default function Model ({ store, schema }) {
     if (!transaction) {
       const transaction = await store.getTransactionFromWeb3(validReq)
       if (!transaction) {
-        throw new Error(`transaction ${validReq.hash} does not exist`)
+        // throw new Error(`transaction ${validReq.hash} does not exist`)
+        return null
       }
       const validTransaction = schema.validate('getTransactionResponse', transaction)
       return store.postTransaction(validTransaction)
@@ -54,7 +54,8 @@ export default function Model ({ store, schema }) {
     if (!transactionReceipt) {
       const transactionReceipt = await store.getTransactionReceiptFromWeb3(validReq)
       if (!transactionReceipt) {
-        throw new Error(`transaction ${validReq.hash} does not exist`)
+        // throw new Error(`transaction ${validReq.hash} does not exist`)
+        return null
       }
       const validTransactionReceipt = schema.validate('getTransactionReceiptResponse', transactionReceipt)
       return store.postTransactionReceipt(validTransactionReceipt)

@@ -21,7 +21,7 @@ const MockStore = () => {
   // Since the model contains all the business logic and validation,
   // we can guarantee that store will return a data when the payload
   // is valid, and null if the payload is not valid
-  async function getBlock ({ number }) {
+  async function getBlockFromStorage ({ number }) {
     const blocks = {
       625106: b1,
       689811: b2
@@ -30,7 +30,7 @@ const MockStore = () => {
     return blocks[number] || null
   }
 
-  async function getTransaction ({ hash }) {
+  async function getTransactionFromStorage ({ hash }) {
     const transactions = {
       '0x56215fd919232eadcf3afd9a3179fa71d5bc6dc5b8411bbb9d9a9d28f7a83858': t1,
       '0xe95f2bef356edf781d71ee81934742aff694ac2fcaab17e05d8ab4b7c43f8fad': t2
@@ -38,7 +38,7 @@ const MockStore = () => {
     return transactions[hash] || null
   }
 
-  async function getTransactionReceipt ({ hash }) {
+  async function getTransactionReceiptFromStorage ({ hash }) {
     const transactions = {
       '0x56215fd919232eadcf3afd9a3179fa71d5bc6dc5b8411bbb9d9a9d28f7a83858': tr1,
       '0xe95f2bef356edf781d71ee81934742aff694ac2fcaab17e05d8ab4b7c43f8fad': tr2
@@ -47,9 +47,12 @@ const MockStore = () => {
   }
 
   return {
-    getBlock,
-    getTransaction,
-    getTransactionReceipt
+    getBlockFromStorage,
+    getTransactionFromStorage,
+    getTransactionReceiptFromStorage,
+    getBlockFromWeb3: () => null,
+    getTransactionFromWeb3: () => null,
+    getTransactionReceiptFromWeb3: () => null
   }
 }
 

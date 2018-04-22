@@ -58,23 +58,23 @@ describe('Block Model', () => {
     }
   })
 
-  it ('should return null if block number/hash is invalid or does not exist', async() => {
-    try{
-      const block = await model.getBlock({ 
+  it('should return null if block number/hash is invalid or does not exist', async() => {
+    try {
+      const block = await model.getBlock({
         number: 10000000
       })
       expect(block).to.be.eq(null)
-    } catch(error) {
+    } catch (error) {
       expect(error).to.be.eq(null)
     }
   })
 
-  it ('should throw error if block number/hash is below 0', async() => {
-    try{
-      await model.getBlock({ 
-        number: -1 
+  it('should throw error if block number/hash is below 0', async() => {
+    try {
+      await model.getBlock({
+        number: -1
       })
-    } catch(error) {
+    } catch (error) {
       expect(error).to.be.an('array')
       expect(error[0].message).to.be.eq('should be >= 0')
     }
@@ -98,11 +98,11 @@ describe('Transaction Model', () => {
     }
   })
 
-  it ('should return null if the transaction hash is invalid or does not exist', async() => {
+  it('should return null if the transaction hash is invalid or does not exist', async() => {
     try {
       const transaction = await model.getTransaction({ hash: '0xf' })
       expect(transaction).to.be.equal(null)
-    } catch(error) {
+    } catch (error) {
       expect(error).to.be.equal(null)
     }
   })
@@ -125,7 +125,7 @@ describe('Transaction Receipt Model', () => {
     }
   })
 
-  it ('should return null if the transaction hash is invalid or does not exist', async() => {
+  it('should return null if the transaction hash is invalid or does not exist', async() => {
     try {
       const transaction = await model.getTransactionReceipt({ hash: '0xf' })
       expect(transaction).to.be.equal(null)
@@ -136,7 +136,7 @@ describe('Transaction Receipt Model', () => {
 })
 
 describe('Schema', () => {
-  it ('should return error if schema does not exist', async () => {
+  it('should return error if schema does not exist', async () => {
     try {
       await schema.validate('nonExistingSchema', null)
     } catch (error) {
@@ -145,7 +145,7 @@ describe('Schema', () => {
     }
   })
 
-  it ('should return error if schema registration fail', async () => {
+  it('should return error if schema registration fail', async () => {
     try {
       schema.add()
     } catch (error) {
